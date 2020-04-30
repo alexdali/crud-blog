@@ -24,7 +24,6 @@ module.exports = {
           }]
         });
 
-        console.log(`getAllPostsOfUser postCollection: ${JSON.stringify(postCollection)}`);
         // return all posts of the user to the client
         return res.status(200).json({
           success: true,
@@ -51,7 +50,6 @@ module.exports = {
       // request the number of all posts
       const postsCount = await Post.count();
 
-      console.log(`countAllPosts postsCount: ${postsCount}`);
       // calculating the number of pages using the number of posts per page
       let pagesCount = Math.ceil(postsCount / perPage);
       // return the number of all posts and pages to the client
@@ -79,7 +77,6 @@ module.exports = {
         order: [['updatedAt', 'DESC']]
       });
 
-      console.log(`recentPageOfPosts postCollection: ${JSON.stringify(postCollection)}`);
       // return the latest posts to the client
       return res.status(200).json({
         success: true,
@@ -107,7 +104,6 @@ module.exports = {
         order: [['updatedAt', 'DESC']]
       });
 
-      console.log(`PageOfPosts postCollection: ${JSON.stringify(postCollection)}`);
       // return the posts by page number to the client
       return res.status(200).json({
         success: true,
@@ -125,7 +121,6 @@ module.exports = {
   // function for creating a new post
   async createPost(req, res) {
     try {
-      console.log(`createPost req.body: ${JSON.stringify(req.body)}; req.userId: ${JSON.stringify(req.userId)}`);
       // deconstructed title & content from request body
       const { title, content } = req.body;
       // TO-DO: validate isEmpty -  content & title
@@ -137,7 +132,6 @@ module.exports = {
       };
       // request for creating a new post
       const newPost = await Post.create(post);
-      console.log(`createPost newPost: ${JSON.stringify(newPost)}`);
       // return the new post to the client
       return res.status(201).json({
         success: true,
@@ -154,8 +148,6 @@ module.exports = {
   // function for updating the post
   async updatePost(req, res) {
     try {
-      console.log(`updatePost req.body: ${JSON.stringify(req.body)}; req.userId: ${req.userId}`);
-      console.log(`updatePost req.body.userId: ${req.body.userId}`);
       // deconstructed title, content, postId, userId from request body
       const { title, content, postId, userId } = req.body;
       // check if the user is the owner of the post
@@ -169,14 +161,12 @@ module.exports = {
         content: content,
         postId: postId,
       };
-      console.log(`updatePost updatePostContent: ${JSON.stringify(updatePostContent)}`);
       // check if the post exist in database by id
       const post = await Post.findByPk(
         postId
       );
 
       if(post) {
-        console.log(`updatePost Post Found: ${JSON.stringify(post)}`);
         // request for updating the post
         const updatedPost = await Post.update(
           updatePostContent, {
@@ -185,8 +175,6 @@ module.exports = {
             }
         });
 
-        console.log(`updatePost updatedPost: ${JSON.stringify(updatedPost)}`);
-        console.log(`updatePost updatedPost[0]: ${updatedPost[0]}`);
         // return the updated post to the client
         return res.status(201).json({
           success: true,
@@ -211,14 +199,12 @@ module.exports = {
   // function for deleting the post
   async deletePost(req, res) {
     try {
-      console.log(`deletePost req.body: ${JSON.stringify(req.body)}; req.userId: ${req.userId}`);
       // deconstructed postId from request body
       const { postId } = req.body;
       // request the post by id
       const post = await Post.findOne({
         where: {id: postId}
       });
-      console.log(`deletePost Post Found: ${JSON.stringify(post)}`);
 
       if(!post) {
         // if the post does not exist in database
@@ -238,8 +224,7 @@ module.exports = {
       const deletedPost = await Post.destroy({
           where: { id: postId }
       });
-      console.log(`deletePost deletedPost: ${JSON.stringify(deletedPost)}`);
-
+      if (deletedPost == 1)
       // return the success message to the client
       res.status(200).json({success: true, message: "Post deleted successfully"});
 
