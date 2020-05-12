@@ -17,12 +17,12 @@ Necessary:
  * Design and implement 2 DB tables-users and posts
  * Methods required for implementation:
  POST /login-Parameters: userName, password. Provides authorization for the user.
-    POST /register-Parameters: userName, password. Provides user registration.
-    GET /posts/count-Returns the total number of messages and pages.
-    GET /posts/list-Returns the first page (the last 5 messages). Contains the message text, message id, and user id
-    GET /posts/list/{page} - Returns {page} page (each page contains 5 messages). Contains the message text, message id, and user id
-    POST /post/new-Parameters: postText. Creating a new message
-    POST /post/delete-Parameters: postId. Deletes a message by its id. only the user who created it can delete it
+ POST /register-Parameters: userName, password. Provides user registration.
+ GET /posts/count-Returns the total number of messages and pages.
+ GET /posts/list-Returns the first page (the last 5 messages). Contains the message text, message id, and user id
+ GET /posts/list/{page} - Returns {page} page (each page contains 5 messages). Contains the message text, message id, and user id
+ POST /post/new-Parameters: postText. Creating a new message
+ POST /post/delete-Parameters: postId. Deletes a message by its id. only the user who created it can delete it
  GET /user/list-Displays a list of all users (only userName and id)
 
 Returns all methods in JSON format
